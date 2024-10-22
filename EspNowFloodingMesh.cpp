@@ -49,6 +49,8 @@ uint8_t syncTTL = 0;
 bool isespNowFloodingMeshInitialized = false;
 int myBsid = 0x112233;
 
+int rssi = 0;
+
 telemetry_stats_st telemetry_stats;
 
 #pragma pack(push,1)

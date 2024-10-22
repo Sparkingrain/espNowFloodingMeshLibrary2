@@ -10,6 +10,9 @@
 #endif
 #include <Arduino.h>
 
+#include <esp_event.h>
+#include <esp_event_loop.h>
+
 const char *ssid = "MESH_NETWORK";
 char wifi_password[20];
 
@@ -31,6 +34,10 @@ uint8_t raw_HEADER[] = {
 };
 short sequence = 0;
 void (*wifi_802_receive_callback)(const uint8_t *, int, uint8_t) = NULL;
+
+esp_err_t event_handler(void *ctx, system_event_t *event){
+  return ESP_OK;
+}
 
 #ifdef ESP32
 void receive_raw_cb(void *recv_buf, wifi_promiscuous_pkt_type_t type)
@@ -99,7 +106,7 @@ void wifi_802_11_begin(char bsId[], int channel)
 
 #ifdef ESP32
   wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
-  ESP_ERROR_CHECK(esp_event_loop_init(event_handler, NULL));
+  //ESP_ERROR_CHECK(esp_event_loop_init(event_handler, NULL));
   ESP_ERROR_CHECK(esp_wifi_init(&cfg));
   ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
   ESP_ERROR_CHECK(esp_wifi_start());
